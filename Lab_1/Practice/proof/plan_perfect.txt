@@ -1,0 +1,102 @@
+== Physical Plan ==
+AdaptiveSparkPlan (17)
++- == Final Plan ==
+   ResultQueryStage (11)
+   +- AQEShuffleRead (10)
+      +- ShuffleQueryStage (9), Statistics(sizeInBytes=32.0 B, rowCount=1)
+         +- Exchange (8)
+            +- * Filter (7)
+               +- * HashAggregate (6)
+                  +- AQEShuffleRead (5)
+                     +- ShuffleQueryStage (4), Statistics(sizeInBytes=256.0 B, rowCount=8)
+                        +- Exchange (3)
+                           +- * HashAggregate (2)
+                              +- * Scan ExistingRDD (1)
++- == Initial Plan ==
+   Sort (16)
+   +- Exchange (15)
+      +- Filter (14)
+         +- HashAggregate (13)
+            +- Exchange (12)
+               +- HashAggregate (2)
+                  +- Scan ExistingRDD (1)
+
+
+(1) Scan ExistingRDD [codegen id : 1]
+Output [1]: [follower#149]
+Arguments: [follower#149], MapPartitionsRDD[58] at applySchemaToPythonRDD at NativeMethodAccessorImpl.java:0, ExistingRDD, UnknownPartitioning(0)
+
+(2) HashAggregate [codegen id : 1]
+Input [1]: [follower#149]
+Keys [1]: [follower#149]
+Functions [1]: [partial_count(1)]
+Aggregate Attributes [1]: [count#155L]
+Results [2]: [follower#149, count#156L]
+
+(3) Exchange
+Input [2]: [follower#149, count#156L]
+Arguments: hashpartitioning(follower#149, 200), ENSURE_REQUIREMENTS, [plan_id=356]
+
+(4) ShuffleQueryStage
+Output [2]: [follower#149, count#156L]
+Arguments: 0
+
+(5) AQEShuffleRead
+Input [2]: [follower#149, count#156L]
+Arguments: coalesced
+
+(6) HashAggregate [codegen id : 2]
+Input [2]: [follower#149, count#156L]
+Keys [1]: [follower#149]
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#152L]
+Results [2]: [follower#149, count(1)#152L AS count#150L]
+
+(7) Filter [codegen id : 2]
+Input [2]: [follower#149, count#150L]
+Condition : (count#150L > 1)
+
+(8) Exchange
+Input [2]: [follower#149, count#150L]
+Arguments: rangepartitioning(count#150L DESC NULLS LAST, follower#149 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [plan_id=388]
+
+(9) ShuffleQueryStage
+Output [2]: [follower#149, count#150L]
+Arguments: 1
+
+(10) AQEShuffleRead
+Input [2]: [follower#149, count#150L]
+Arguments: local
+
+(11) ResultQueryStage
+Output [2]: [follower#149, count#150L]
+Arguments: 2
+
+(12) Exchange
+Input [2]: [follower#149, count#156L]
+Arguments: hashpartitioning(follower#149, 200), ENSURE_REQUIREMENTS, [plan_id=337]
+
+(13) HashAggregate
+Input [2]: [follower#149, count#156L]
+Keys [1]: [follower#149]
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#152L]
+Results [2]: [follower#149, count(1)#152L AS count#150L]
+
+(14) Filter
+Input [2]: [follower#149, count#150L]
+Condition : (count#150L > 1)
+
+(15) Exchange
+Input [2]: [follower#149, count#150L]
+Arguments: rangepartitioning(count#150L DESC NULLS LAST, follower#149 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [plan_id=341]
+
+(16) Sort
+Input [2]: [follower#149, count#150L]
+Arguments: [count#150L DESC NULLS LAST, follower#149 ASC NULLS FIRST], true, 0
+
+(17) AdaptiveSparkPlan
+Output [2]: [follower#149, count#150L]
+Arguments: isFinalPlan=true
+
+

@@ -1,0 +1,6 @@
+run_id,task,note,files_read,input_size_bytes,shuffle_read_bytes,shuffle_write_bytes,timestamp
+r2,wordcount_rdd,tiny_shakespeare.txt,1,1115394,0,0,2025-10-14T21:26:13Z
+r2,wordcount_df,tiny_shakespeare.txt,1,1115394,0,0,2025-10-14T21:26:13Z
+r2,perfect_followers,tiny_shakespeare.txt,1,1115394,0,0,2025-10-14T21:26:13Z
+r2,pmi_pairs,tiny_shakespeare.txt,1,1115394,0,0,2025-10-14T21:26:13Z
+r2,pmi_stripes,tiny_shakespeare.txt,1,1115394,0,0,2025-10-14T21:26:13Z

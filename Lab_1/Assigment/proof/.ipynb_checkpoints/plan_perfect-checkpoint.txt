@@ -1,0 +1,96 @@
+== Physical Plan ==
+AdaptiveSparkPlan (17)
++- Sort (16)
+   +- Filter (15)
+      +- HashAggregate (14)
+         +- HashAggregate (13)
+            +- Project (12)
+               +- Filter (11)
+                  +- Window (10)
+                     +- Sort (9)
+                        +- Exchange (8)
+                           +- Project (7)
+                              +- Filter (6)
+                                 +- Generate (5)
+                                    +- InMemoryTableScan (1)
+                                          +- InMemoryRelation (2)
+                                                +- * Project (4)
+                                                   +- Scan text  (3)
+
+
+(1) InMemoryTableScan
+Output [1]: [line#128]
+Arguments: [line#128]
+
+(2) InMemoryRelation
+Arguments: [line#128], StorageLevel(disk, memory, deserialized, 1 replicas)
+
+(3) Scan text 
+Output [1]: [value#126]
+Batched: false
+Location: InMemoryFileIndex [file:/mnt/c/Users/rerel/OneDrive/Bureau/Esiee/Esiee/E5/BDA/Lab_1/Assigment/data/shakespeare.txt]
+ReadSchema: struct<value:string>
+
+(4) Project [codegen id : 1]
+Output [1]: [value#126 AS line#128]
+Input [1]: [value#126]
+
+(5) Generate
+Input [1]: [line#128]
+Arguments: explode(split(lower(line#128), [^a-z]+, -1)), false, [token#226]
+
+(6) Filter
+Input [1]: [token#226]
+Condition : NOT (token#226 = )
+
+(7) Project
+Output [2]: [token#226, monotonically_increasing_id() AS _w0#228L]
+Input [1]: [token#226]
+
+(8) Exchange
+Input [2]: [token#226, _w0#228L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [plan_id=678]
+
+(9) Sort
+Input [2]: [token#226, _w0#228L]
+Arguments: [_w0#228L ASC NULLS FIRST], false, 0
+
+(10) Window
+Input [2]: [token#226, _w0#228L]
+Arguments: [lead(token#226, 1, null) windowspecdefinition(_w0#228L ASC NULLS FIRST, specifiedwindowframe(RowFrame, 1, 1)) AS next_token#227], [_w0#228L ASC NULLS FIRST]
+
+(11) Filter
+Input [3]: [token#226, _w0#228L, next_token#227]
+Condition : (token#226 = perfect)
+
+(12) Project
+Output [1]: [next_token#227]
+Input [3]: [token#226, _w0#228L, next_token#227]
+
+(13) HashAggregate
+Input [1]: [next_token#227]
+Keys [1]: [next_token#227]
+Functions [1]: [partial_count(1)]
+Aggregate Attributes [1]: [count#249L]
+Results [2]: [next_token#227, count#250L]
+
+(14) HashAggregate
+Input [2]: [next_token#227, count#250L]
+Keys [1]: [next_token#227]
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#233L]
+Results [2]: [next_token#227, count(1)#233L AS count#229L]
+
+(15) Filter
+Input [2]: [next_token#227, count#229L]
+Condition : (count#229L > 1)
+
+(16) Sort
+Input [2]: [next_token#227, count#229L]
+Arguments: [count#229L DESC NULLS LAST], true, 0
+
+(17) AdaptiveSparkPlan
+Output [2]: [next_token#227, count#229L]
+Arguments: isFinalPlan=false
+
+

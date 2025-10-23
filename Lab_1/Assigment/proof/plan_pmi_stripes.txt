@@ -1,0 +1,14 @@
+== Physical Plan ==
+TakeOrderedAndProject (2)
++- * Scan ExistingRDD (1)
+
+
+(1) Scan ExistingRDD [codegen id : 1]
+Output [4]: [x#118, y#119, count#120L, pmi#121]
+Arguments: [x#118, y#119, count#120L, pmi#121], MapPartitionsRDD[67] at applySchemaToPythonRDD at NativeMethodAccessorImpl.java:0, ExistingRDD, UnknownPartitioning(0)
+
+(2) TakeOrderedAndProject
+Input [4]: [x#118, y#119, count#120L, pmi#121]
+Arguments: 50, [pmi#121 DESC NULLS LAST], [x#118, y#119, count#120L, pmi#121]
+
+
