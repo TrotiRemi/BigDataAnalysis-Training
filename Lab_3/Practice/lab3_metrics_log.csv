@@ -1,0 +1,4 @@
+run_id,task,note,files_read,input_size_bytes,shuffle_read_bytes,shuffle_write_bytes,timestamp
+r2,ppr_multisource,karate_edges.txt,1,98,0,0,2025-10-14T21:26:13Z
+r2,spam_baseline_lr,sms.tsv,1,477907,0,0,2025-10-14T21:26:13Z
+r2,spam_manual_sgd,sms.tsv,1,477907,0,0,2025-10-14T21:26:13Z

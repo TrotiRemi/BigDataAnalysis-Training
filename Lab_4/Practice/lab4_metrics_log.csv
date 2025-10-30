@@ -1,0 +1,12 @@
+run_id,task,note,files_read,input_size_bytes,shuffle_read_bytes,shuffle_write_bytes,timestamp
+r2,topN_rdd,lineitem.tbl text,1,482,0,0,2025-10-14T22:25:53Z
+r2,topN_df,lineitem parquet partitioned,6,25775,0,0,2025-10-14T22:25:53Z
+r2,projection_all_cols,lineitem.tbl full projection,1,482,0,0,2025-10-14T22:25:54Z
+r2,projection_min_cols,lineitem.tbl pruned projection,1,482,0,0,2025-10-14T22:25:54Z
+r2,perfect_followers,lineitem.tbl follower counts,1,482,0,0,2025-10-14T22:25:55Z
+r2,bigram_pairs,text shakespeare mini,1,1115394,0,0,2025-10-14T22:25:55Z
+r2,bigram_stripes,text shakespeare mini,1,1115394,0,0,2025-10-14T22:25:55Z
+r2,index_build,tpch synthetic parquet index,6,161226,0,0,2025-10-14T22:25:56Z
+r2,hourly_trip_count,taxi data streaming once,3,1140,0,0,2025-10-14T22:25:56Z
+r2,region_trip_count,taxi data streaming once,3,1140,0,0,2025-10-14T22:25:56Z
+r2,trending_arrivals,taxi data streaming once,3,1140,0,0,2025-10-14T22:25:57Z

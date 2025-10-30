@@ -1,0 +1,6 @@
+run_id,task,note,files_read,input_size_bytes,shuffle_read_bytes,shuffle_write_bytes,timestamp
+r2,bigram_pairs,shakespeare.txt,1,1115394,0,0,2025-10-14T21:26:13Z
+r2,bigram_stripes,shakespeare.txt,1,1115394,0,0,2025-10-14T21:26:13Z
+r2,index_build,shakespeare.txt,1,1115394,0,0,2025-10-14T21:26:13Z
+r2,boolean_and_queries,index_parquet,2,433648,0,0,2025-10-14T21:26:13Z
+r2,boolean_or_queries,index_parquet,2,433648,0,0,2025-10-14T21:26:13Z
